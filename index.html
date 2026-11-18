@@ -3,111 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ECO-ACU | Sistema Inteligente de Recolección</title>
+    <title>ECO-ACU | Plataforma de Recolección</title>
     <style>
         :root {
             --primary: #2e7d32;
             --secondary: #81c784;
             --dark: #1b5e20;
             --light: #f1f8e9;
-            --gray: #666;
+            --gray: #555;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f9fbe7; color: #333; line-height: 1.6; }
-        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 2rem 1rem; text-align: center; }
-        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-        header p { font-size: 1.1rem; opacity: 0.9; }
-        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
-        .card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; }
-        h2 { color: var(--dark); margin-bottom: 1.5rem; border-bottom: 2px solid var(--light); padding-bottom: 0.5rem; }
-        .form-group { margin-bottom: 1.2rem; }
-        label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gray); }
-        input, select, textarea { width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
-        button { background-color: var(--primary); color: white; border: none; padding: 0.9rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: background 0.3s; }
-        button:hover { background-color: var(--dark); }
-        .alert-box { background: #ffebee; border-left: 5px solid #c62828; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { padding: 0.8rem; text-align: left; border-bottom: 1px solid #ddd; }
-        th { background-color: var(--light); color: var(--dark); }
-        .badge { background: #ffe0b2; color: #e65100; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+        body { background-color: #f4f7f2; color: #333; line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 1.8rem 1rem; text-align: center; }
+        header h1 { font-size: 2.2rem; margin-bottom: 0.3rem; }
+        
+        /* Barra de selección de Rol */
+        .role-nav { display: flex; justify-content: center; gap: 1rem; background: #fff; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 10; }
+        .role-btn { padding: 0.7rem 1.5rem; border: 2px solid var(--primary); background: white; color: var(--primary); border-radius: 25px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-size: 0.95rem; }
+        .role-btn.active { background: var(--primary); color: white; }
+        
+        .container { max-width: 850px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 12px; padding: 1.8rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
+        h2 { color: var(--dark); margin-bottom: 1.2rem; border-bottom: 2px solid var(--light); padding-bottom: 0.5rem; font-size: 1.4rem; }
+        
+        .form-group { margin-bottom: 1.1rem; }
+        label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: var(--gray); font-size: 0.95rem; }
+        input { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        .submit-btn { background-color: var(--primary); color: white; border: none; padding: 0.9rem; font-size: 1rem; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s; }
+        .submit-btn:hover { background-color: var(--dark); }
+        
+        .alert-box { background: #ffebee; border-left: 5px solid #c62828; padding: 1rem; margin-bottom: 1.2rem; border-radius: 4px; font-size: 0.95rem; }
+        
+        /* Tarjetas de pedidos para el recolector */
+        .pedido-item { border: 1px solid #e0e0e0; border-left: 5px solid #ff9800; border-radius: 8px; padding: 1.2rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: #fffdf9; }
+        .pedido-info h3 { color: var(--dark); margin-bottom: 0.3rem; }
+        .pedido-info p { font-size: 0.9rem; color: #555; margin-bottom: 0.2rem; }
+        .tag-iot { background: #ffe0b2; color: #e65100; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        .tag-manual { background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; }
+        
+        .btn-recoger { background: #2e7d32; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .btn-recoger:hover { background: #1b5e20; }
+        
+        .hidden { display: none; }
+        .empty-msg { text-align: center; color: #888; padding: 2rem 0; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>ECO-ACU 🌿</h1>
-        <p>Gestión inteligente y recolección eficiente de Aceite de Cocina Usado</p>
+        <p>Conexión inteligente entre Restaurantes y Recolectores de ACU</p>
     </header>
 
+    <!-- Selector de Perfil -->
+    <nav class="role-nav">
+        <button id="btnRestaurante" class="role-btn active" onclick="cambiarRol('restaurante')">👨‍🍳 Vista Restaurante</button>
+        <button id="btnRecolector" class="role-btn" onclick="cambiarRol('recolector')">🚛 Vista Recolector (<span id="contadorPendientes">1</span>)</button>
+    </nav>
+
     <div class="container">
-        
-        <!-- Estado del Contenedor Inteligente -->
-        <div class="card">
-            <h2>Estado del Recipiente IoT</h2>
-            <div class="alert-box">
-                <strong>⚠️ Alerta del Sistema:</strong> El contenedor del <strong>Restaurante Sabor & Sazón</strong> ha alcanzado el <strong>85% de su capacidad</strong>. Se requiere recolección pronto.
+
+        <!-- SECCIÓN 1: VISTA DEL DUEÑO DEL RESTAURANTE -->
+        <div id="vistaRestaurante">
+            <div class="card">
+                <h2>📡 Monitoreo de mi Recipiente Inteligente</h2>
+                <div class="alert-box">
+                    <strong>⚠️ Alerta Automática:</strong> Tu contenedor ha alcanzado el <strong>85% de su capacidad</strong>. El recolector ya fue notificado automáticamente, o puedes confirmar tu horario abajo.
+                </div>
+                <p><strong>Nivel actual de aceite:</strong> 85 / 100 Litros</p>
+                <progress value="85" max="100" style="width:100%; height:22px; margin-top:0.5rem; accent-color: var(--primary);"></progress>
             </div>
-            <p><strong>Nivel actual de llenado:</strong> 85 / 100 Litros</p>
-            <progress value="85" max="100" style="width:100%; height:25px; margin-top:0.5rem; accent-color: var(--primary);"></progress>
+
+            <div class="card">
+                <h2>📝 Solicitar Recolección al Transportador</h2>
+                <form id="recoleccionForm" onsubmit="enviarSolicitud(event)">
+                    <div class="form-group">
+                        <label for="restaurante">Nombre de tu Restaurante:</label>
+                        <input type="text" id="restaurante" required placeholder="Ej. Asadero El Buen Sabor">
+                    </div>
+                    <div class="form-group">
+                        <label for="litros">Cantidad estimada a entregar (Litros):</label>
+                        <input type="number" id="litros" required min="5" placeholder="Ej. 30">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección y Barrio:</label>
+                        <input type="text" id="direccion" required placeholder="Ej. Calle 5 # 8-40, Centro">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono / WhatsApp de contacto:</label>
+                        <input type="tel" id="telefono" required placeholder="Ej. 310 555 1234">
+                    </div>
+                    <button type="submit" class="submit-btn">Enviar Solicitud al Recolector</button>
+                </form>
+            </div>
         </div>
 
-        <!-- Formulario para el Restaurante -->
-        <div class="card">
-            <h2>Solicitar Recolección Manual</h2>
-            <form id="recoleccionForm" onsubmit="enviarSolicitud(event)">
-                <div class="form-group">
-                    <label for="restaurante">Nombre del Restaurante:</label>
-                    <input type="text" id="restaurante" required placeholder="Ej. Pizzería Italiana">
+        <!-- SECCIÓN 2: VISTA DEL RECOLECTOR -->
+        <div id="vistaRecolector" class="hidden">
+            <div class="card">
+                <h2>🚛 Ruta y Recolecciones Pendientes</h2>
+                <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">Aquí aparecen únicamente los restaurantes con alerta de llenado o solicitud activa.</p>
+                
+                <div id="listaPendientes">
+                    <!-- Los pedidos se cargan aquí automáticamente -->
                 </div>
-                <div class="form-group">
-                    <label for="litros">Cantidad estimada de ACU (Litros):</label>
-                    <input type="number" id="litros" required placeholder="Ej. 20">
-                </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección / Zona:</label>
-                    <input type="text" id="direccion" required placeholder="Ej. Calle 5 # 3-21">
-                </div>
-                <button type="submit">Enviar Solicitud al Recolector</button>
-            </form>
-        </div>
-
-        <!-- Panel del Recolector -->
-        <div class="card">
-            <h2>Panel de Solicitudes Pendientes (Vista Recolector)</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Restaurante</th>
-                        <th>Litros</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody id="tablaSolicitudes">
-                    <tr>
-                        <td>Restaurante Sabor & Sazón</td>
-                        <td>45 L</td>
-                        <td><span class="badge">Pendiente (IoT)</span></td>
-                    </tr>
-                </tbody>
-            </table>
+            </div>
         </div>
 
     </div>
 
     <script>
+        // Datos iniciales por defecto (simula una alerta IoT activa)
+        const pedidosIniciales = [
+            {
+                id: 1,
+                restaurante: "Restaurante Sabor & Sazón",
+                litros: 85,
+                direccion: "Cra 9 # 14-20, Sector Histórico",
+                telefono: "312 456 7890",
+                tipo: "Alerta Sensor IoT (85%)"
+            }
+        ];
+
+        // Cargar pedidos desde la memoria del navegador
+        let pedidos = JSON.parse(localStorage.getItem('pedidosACU')) || pedidosIniciales;
+
+        function guardarYActualizar() {
+            localStorage.setItem('pedidosACU', JSON.stringify(pedidos));
+            renderizarPedidos();
+        }
+
+        function cambiarRol(rol) {
+            const vistaRest = document.getElementById('vistaRestaurante');
+            const vistaRec = document.getElementById('vistaRecolector');
+            const btnRest = document.getElementById('btnRestaurante');
+            const btnRec = document.getElementById('btnRecolector');
+
+            if (rol === 'restaurante') {
+                vistaRest.classList.remove('hidden');
+                vistaRec.classList.add('hidden');
+                btnRest.classList.add('active');
+                btnRec.classList.remove('active');
+            } else {
+                vistaRest.classList.add('hidden');
+                vistaRec.classList.remove('hidden');
+                btnRest.classList.remove('active');
+                btnRec.classList.add('active');
+                renderizarPedidos();
+            }
+        }
+
         function enviarSolicitud(e) {
             e.preventDefault();
-            const rest = document.getElementById('restaurante').value;
-            const litros = document.getElementById('litros').value;
-            
-            const tabla = document.getElementById('tablaSolicitudes');
-            const nuevaFila = document.createElement('tr');
-            nuevaFila.innerHTML = `<td>${rest}</td><td>${litros} L</td><td><span class="badge" style="background:#c8e6c9; color:#2e7d32;">Nueva Solicitud</span></td>`;
-            tabla.appendChild(nuevaFil1 = nuevaFila);
-            
-            alert('¡Solicitud enviada con éxito al recolector de ACU!');
+            const nuevoPedido = {
+                id: Date.now(),
+                restaurante: document.getElementById('restaurante').value,
+                litros: document.getElementById('litros').value,
+                direccion: document.getElementById('direccion').value,
+                telefono: document.getElementById('telefono').value,
+                tipo: "Solicitud Manual Web"
+            };
+
+            pedidos.push(nuevoPedido);
+            guardarYActualizar();
+
+            alert('✅ ¡Solicitud enviada! Ahora el recolector verá tu pedido en su panel de pendientes.');
             document.getElementById('recoleccionForm').reset();
         }
+
+        function marcarRecolectado(id) {
+            if(confirm('¿Confirmas que ya recogiste el aceite de este restaurante?')) {
+                pedidos = pedidos.filter(p => p.id !== id);
+                guardarYActualizar();
+            }
+        }
+
+        function renderizarPedidos() {
+            const contenedor = document.getElementById('listaPendientes');
+            const contador = document.getElementById('contadorPendientes');
+            contador.textContent = pedidos.length;
+
+            if (pedidos.length === 0) {
+                contenedor.innerHTML = '<div class="empty-msg">🎉 ¡Excelente trabajo! No tienes recolecciones pendientes por ahora.</div>';
+                return;
+            }
+
+            contenedor.innerHTML = '';
+            pedidos.forEach(p => {
+                const esIoT = p.tipo.includes('IoT');
+                const badgeClass = esIoT ? 'tag-iot' : 'tag-manual';
+                
+                const item = document.createElement('div');
+                item.className = 'pedido-item';
+                item.innerHTML = `
+                    <div class="pedido-info">
+                        <span class="${badgeClass}">${p.tipo}</span>
+                        <h3 style="margin-top:0.4rem;">${p.restaurante} — <strong>${p.litros} Litros</strong></h3>
+                        <p>📍 <strong>Dirección:</strong> ${p.direccion}</p>
+                        <p>📞 <strong>Contacto:</strong> ${p.telefono}</p>
+                    </div>
+                    <button class="btn-recoger" onclick="marcarRecolectado(${p.id})">✓ Marcar Recolectado</button>
+                `;
+                contenedor.appendChild(item);
+            });
+        }
+
+        // Inicializar contador al cargar
+        renderizarPedidos();
     </script>
 </body>
 </html>
