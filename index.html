@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECO-ACU | Sistema Inteligente de Recolección</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --secondary: #81c784;
+            --dark: #1b5e20;
+            --light: #f1f8e9;
+            --gray: #666;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f9fbe7; color: #333; line-height: 1.6; }
+        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 2rem 1rem; text-align: center; }
+        header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+        h2 { color: var(--dark); margin-bottom: 1.5rem; border-bottom: 2px solid var(--light); padding-bottom: 0.5rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--gray); }
+        input, select, textarea { width: 100%; padding: 0.8rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        button { background-color: var(--primary); color: white; border: none; padding: 0.9rem 1.5rem; font-size: 1rem; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold; transition: background 0.3s; }
+        button:hover { background-color: var(--dark); }
+        .alert-box { background: #ffebee; border-left: 5px solid #c62828; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.8rem; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: var(--light); color: var(--dark); }
+        .badge { background: #ffe0b2; color: #e65100; padding: 0.3rem 0.6rem; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+    </style>
+</head>
+<body>
 
+    <header>
+        <h1>ECO-ACU 🌿</h1>
+        <p>Gestión inteligente y recolección eficiente de Aceite de Cocina Usado</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Estado del Contenedor Inteligente -->
+        <div class="card">
+            <h2>Estado del Recipiente IoT</h2>
+            <div class="alert-box">
+                <strong>⚠️ Alerta del Sistema:</strong> El contenedor del <strong>Restaurante Sabor & Sazón</strong> ha alcanzado el <strong>85% de su capacidad</strong>. Se requiere recolección pronto.
+            </div>
+            <p><strong>Nivel actual de llenado:</strong> 85 / 100 Litros</p>
+            <progress value="85" max="100" style="width:100%; height:25px; margin-top:0.5rem; accent-color: var(--primary);"></progress>
+        </div>
+
+        <!-- Formulario para el Restaurante -->
+        <div class="card">
+            <h2>Solicitar Recolección Manual</h2>
+            <form id="recoleccionForm" onsubmit="enviarSolicitud(event)">
+                <div class="form-group">
+                    <label for="restaurante">Nombre del Restaurante:</label>
+                    <input type="text" id="restaurante" required placeholder="Ej. Pizzería Italiana">
+                </div>
+                <div class="form-group">
+                    <label for="litros">Cantidad estimada de ACU (Litros):</label>
+                    <input type="number" id="litros" required placeholder="Ej. 20">
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección / Zona:</label>
+                    <input type="text" id="direccion" required placeholder="Ej. Calle 5 # 3-21">
+                </div>
+                <button type="submit">Enviar Solicitud al Recolector</button>
+            </form>
+        </div>
+
+        <!-- Panel del Recolector -->
+        <div class="card">
+            <h2>Panel de Solicitudes Pendientes (Vista Recolector)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Restaurante</th>
+                        <th>Litros</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaSolicitudes">
+                    <tr>
+                        <td>Restaurante Sabor & Sazón</td>
+                        <td>45 L</td>
+                        <td><span class="badge">Pendiente (IoT)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function enviarSolicitud(e) {
+            e.preventDefault();
+            const rest = document.getElementById('restaurante').value;
+            const litros = document.getElementById('litros').value;
+            
+            const tabla = document.getElementById('tablaSolicitudes');
+            const nuevaFila = document.createElement('tr');
+            nuevaFila.innerHTML = `<td>${rest}</td><td>${litros} L</td><td><span class="badge" style="background:#c8e6c9; color:#2e7d32;">Nueva Solicitud</span></td>`;
+            tabla.appendChild(nuevaFil1 = nuevaFila);
+            
+            alert('¡Solicitud enviada con éxito al recolector de ACU!');
+            document.getElementById('recoleccionForm').reset();
+        }
+    </script>
+</body>
+</html>
